@@ -37,9 +37,9 @@ $^{3}$ \quad Electronics Department, Instituto Tecnológico Superior Rumiñahui 
 
 \section{Introduction}
 
-Vehicle-integrated photovoltaics (VIPV) can turn vehicle surfaces into electricity generators and, in some configurations, supplement the energy stored in the battery. Reviews and modeling studies indicate that VIPV potential depends on active surface area, orientation, shading, temperature, irradiance, and usage patterns; therefore, design estimates cannot replace measurements made on the vehicle \citep{ref-commault,ref-sierra,ref-hoth,ref-kouzelis}. Field studies that quantify the output of vehicle-mounted modules require measurements of irradiance on the vehicle body and module temperature, together with a description of the driving profile \citep{ref-wetzel,ref-ng,ref-ota-irradiance,ref-ota-driving,ref-ota-curve}.
+Vehicle-integrated photovoltaics (VIPV) can turn vehicle surfaces into electricity generators and, in some configurations, supplement the energy stored in the battery. Reviews and modeling studies indicate that VIPV potential depends on active surface area, orientation, shading, temperature, irradiance, and usage patterns; therefore, design estimates cannot replace measurements made on the vehicle \citep{ref-commault,ref-sierra,ref-hoth,ref-kouzelis}. Photovoltaic sizing and installation have also been reported for a small electric go-kart, a vehicle class comparable to the prototype studied here \citep{ref-guerrero}. Field studies that quantify the output of vehicle-mounted modules require measurements of irradiance on the vehicle body and module temperature, together with a description of the driving profile \citep{ref-wetzel,ref-ng,ref-ota-irradiance,ref-ota-driving,ref-ota-curve}. Because irradiance is the main driver of photovoltaic output, machine-learning approaches have also been proposed to predict solar radiation for photovoltaic systems \citep{ref-palomo}.
 
-A growing body of research on light electric vehicles uses low-cost data loggers (GPS and voltage and current sensors) to describe real-world use and estimate energy consumption. These studies assume that each channel measures the quantity indicated by its label, with an adequate range and zero offset. However, the measurement chain is rarely documented, and common problems in field records (zero readings, spurious peaks, saturation, and zero drift) are addressed using filters that are seldom described in detail \citep{ref-bhavsar,ref-alwreikat}. Voltage- and current-sensor errors directly affect derived quantities \citep{ref-hu,ref-zheng}. Real-world driving cycles and GPS data analysis have been used to characterize the use of electric and light vehicles \citep{ref-pfriem,ref-brady,ref-uberti,ref-gurusamy}, but less attention has been paid to the validity of the accompanying electrical signals. Field data for solar-assisted light vehicles at equatorial latitudes and high elevations are also scarce, as is documentation of how telemetry signals from low-cost prototypes are assessed; both are relevant to vehicle development in the Andean region.
+A growing body of research on light electric vehicles uses low-cost data loggers (GPS and voltage and current sensors) to describe real-world use and estimate energy consumption. These studies assume that each channel measures the quantity indicated by its label, with an adequate range and zero offset. However, the measurement chain is rarely documented, and common problems in field records (zero readings, spurious peaks, saturation, and zero drift) are addressed using filters that are seldom described in detail \citep{ref-bhavsar,ref-alwreikat}. Voltage- and current-sensor errors directly affect derived quantities \citep{ref-hu,ref-zheng}. Real-world driving cycles and GPS data analysis have been used to characterize the use of electric and light vehicles \citep{ref-pfriem,ref-brady,ref-uberti,ref-gurusamy}, but less attention has been paid to the validity of the accompanying electrical signals. Field data for solar-assisted light vehicles at equatorial latitudes and high elevations are also scarce, as is documentation of how telemetry signals from low-cost prototypes are assessed; both are relevant to vehicle development in the Andean region, where sustainable mobility is a growing national concern \citep{ref-antamba}.
 
 The analysis uses field records from a light electric vehicle prototype developed at the Instituto Tecnológico Superior Rumiñahui (ISTER) in Sangolquí, Ecuador, together with the vehicle's technical specifications. Specifically, it (i) characterizes GPS-tracked routes and speeds in an Andean setting, (ii) assesses whether the available electrical telemetry supports estimates of energy consumption or photovoltaic generation, and (iii) derives minimum measurement-chain requirements from the observed data-quality problems.
 The vehicle's solar performance is not evaluated because the available data do not support such an assessment.
@@ -303,6 +303,9 @@ BLDC: brushless direct current; GNSS: Global Navigation Satellite System; GPS: G
     \bibitem[Kouzelis et al.(2025)]{ref-kouzelis}
     Kouzelis, A.; Linders, K.; Bandyopadhyay, S.; Mouli, G.R.C. Analysis of vehicle-integrated photovoltaics and vehicle-to-grid on electric vehicle battery life. \textit{Journal of Power Sources} \textbf{2025}, \textit{631}, 236117. https://doi.org/10.1016/j.jpowsour.2024.236117.
 
+    \bibitem[Guerrero Peña et al.(2025)]{ref-guerrero}
+    Guerrero Peña, F.J.; Montaño Tinoco, D.P.; Granda Gutiérrez, D.E. Dimensionamiento e implementación del sistema fotovoltaico a un gokart eléctrico. \textit{CONECTIVIDAD} \textbf{2025}, \textit{6}, 17--28. https://doi.org/10.37431/conectividad.v6i3.264.
+
     \bibitem[Wetzel et al.(2022)]{ref-wetzel}
     Wetzel, G.; Salomon, L.; Krügener, J.; Bredemeier, D.; Peibst, R. High time resolution measurement of solar irradiance onto driving car body for vehicle integrated photovoltaics. \textit{Progress in Photovoltaics: Research and Applications} \textbf{2022}, \textit{30}, 543--551. https://doi.org/10.1002/pip.3526.
 
@@ -318,11 +321,20 @@ BLDC: brushless direct current; GNSS: Global Navigation Satellite System; GPS: G
     \bibitem[Ota et al.(2022)]{ref-ota-curve}
     Ota, Y.; Araki, K.; Nagaoka, A.; Nishioka, K. Curve correction of vehicle-integrated photovoltaics using statistics on commercial car bodies. \textit{Progress in Photovoltaics: Research and Applications} \textbf{2022}, \textit{30}, 152--163. https://doi.org/10.1002/pip.3473.
 
+    \bibitem[Palomo et al.(2025)]{ref-palomo}
+    Palomo, W.; Quinatoa, C.; Mullo, M.; Castillo, J. Predicción de radiación solar en sistemas fotovoltaicos utilizando técnicas de aprendizaje automático. \textit{CONECTIVIDAD} \textbf{2025}, \textit{6}, 338--355. https://doi.org/10.37431/conectividad.v6i1.196.
+
     \bibitem[Bhavsar et al.(2024)]{ref-bhavsar}
     Bhavsar, D.; Jaychandra, R.K.; Mittal, M. Data acquisition and performance analysis during real-time driving of a two-wheeler electric vehicle---A case study. \textit{World Electric Vehicle Journal} \textbf{2024}, \textit{15}, 121. https://doi.org/10.3390/wevj15030121.
 
     \bibitem[Al-Wreikat et al.(2021)]{ref-alwreikat}
     Al-Wreikat, Y.; Serrano, C.; Sodré, J.R. Driving behaviour and trip condition effects on the energy consumption of an electric vehicle under real-world driving. \textit{Applied Energy} \textbf{2021}, \textit{297}, 117096. https://doi.org/10.1016/j.apenergy.2021.117096.
+
+    \bibitem[Hu et al.(2022)]{ref-hu}
+    Hu, C.; Li, B.; Ma, L.; Cheng, F. State-of-charge estimation for lithium-ion batteries of electric vehicle based on sensor random error compensation. \textit{Journal of Energy Storage} \textbf{2022}, \textit{55}, 105537. https://doi.org/10.1016/j.est.2022.105537.
+
+    \bibitem[Zheng et al.(2020)]{ref-zheng}
+    Zheng, C.; Chen, Z.; Huang, D. Fault diagnosis of voltage sensor and current sensor for lithium-ion battery pack using hybrid system modeling and unscented particle filter. \textit{Energy} \textbf{2020}, \textit{191}, 116504. https://doi.org/10.1016/j.energy.2019.116504.
 
     \bibitem[Pfriem and Gauterin(2016)]{ref-pfriem}
     Pfriem, M.; Gauterin, F. Development of real-world driving cycles for battery electric vehicles. \textit{World Electric Vehicle Journal} \textbf{2016}, \textit{8}, 14--24. https://doi.org/10.3390/wevj8010014.
@@ -332,6 +344,12 @@ BLDC: brushless direct current; GNSS: Global Navigation Satellite System; GPS: G
 
     \bibitem[Uberti et al.(2020)]{ref-uberti}
     Uberti, S.; Azzini, G.; Beltrami, D.; Tribioli, L.; Iora, P. Modelling of a 15-kW electric utility vehicle and range assessment through driving cycle analysis based on GPS experimental data. SAE Technical Paper 2020-24-0018, 2020. https://doi.org/10.4271/2020-24-0018.
+
+    \bibitem[Gurusamy and Ashok(2024)]{ref-gurusamy}
+    Gurusamy, A.; Ashok, B. Establishment of electric two-wheeler driving cycle for energy economy and life cycle assessment under Indian Tier-2 city driving environments. \textit{Sustainable Energy Technologies and Assessments} \textbf{2024}, \textit{66}, 103826. https://doi.org/10.1016/j.seta.2024.103826.
+
+    \bibitem[Antamba Guasgua et al.(2025)]{ref-antamba}
+    Antamba Guasgua, J.; Ortiz Álvarez, D.; Vacacela Mazón, P.; Flores, J.C. Movilidad sostenible. Caso de estudio: Ecuador. \textit{CONECTIVIDAD} \textbf{2025}, \textit{6}, 236--245. https://doi.org/10.37431/conectividad.v6i3.216.
 
     \bibitem[Künsch(1989)]{ref-kunsch}
     Künsch, H.R. The Jackknife and the Bootstrap for General Stationary Observations. \textit{The Annals of Statistics} \textbf{1989}, \textit{17}, 1217--1241. https://doi.org/10.1214/aos/1176347265.
@@ -345,40 +363,31 @@ BLDC: brushless direct current; GNSS: Global Navigation Satellite System; GPS: G
     \bibitem[Seabold and Perktold(2010)]{ref-statsmodels}
     Seabold, S.; Perktold, J. statsmodels: Econometric and Statistical Modeling with Python. In Proceedings of the 9th Python in Science Conference, Austin, TX, USA, 28 June--3 July 2010; pp. 92--96. https://doi.org/10.25080/Majora-92bf1922-011.
 
-    \bibitem[Taylor and Kuyatt(1994)]{ref-nist}
-    Taylor, B.N.; Kuyatt, C.E. \textit{Guidelines for Evaluating and Expressing the Uncertainty of NIST Measurement Results}; NIST Technical Note 1297; National Institute of Standards and Technology: Gaithersburg, MD, USA, 1994. https://doi.org/10.6028/NIST.TN.1297.
-
-    \bibitem[JCGM(2008)]{ref-gum}
-    Joint Committee for Guides in Metrology (JCGM). \textit{Evaluation of Measurement Data---Guide to the Expression of Uncertainty in Measurement}; JCGM 100:2008; BIPM: Sèvres, France, 2008. https://doi.org/10.59161/JCGM100-2008E.
-
-    \bibitem[IEC(2021)]{ref-iec61724}
-    International Electrotechnical Commission (IEC). \textit{IEC 61724-1:2021: Photovoltaic System Performance---Part 1: Monitoring}; IEC: Geneva, Switzerland, 2021. Available online: \url{https://webstore.iec.ch/en/products}.
-
-    \bibitem[SAE International(2021)]{ref-sae1634}
-    SAE International. \textit{SAE J1634\_202104: Electric Vehicle Energy Consumption and Range Test Procedure}; SAE International: Warrendale, PA, USA, 2021. Available online: \url{https://www.sae.org/standards/content/j1634_202104/}.
-
-    \bibitem[Ruetschi(2004)]{ref-ruetschi}
-    Ruetschi, P. Aging mechanisms and service life of lead--acid batteries. \textit{Journal of Power Sources} \textbf{2004}, \textit{127}, 33--44. https://doi.org/10.1016/j.jpowsour.2003.09.052.
-
     \bibitem[André et al.(2004)]{ref-andre}
     André, M. The ARTEMIS European driving cycles for measuring car pollutant emissions. \textit{Science of the Total Environment} \textbf{2004}, \textit{334--335}, 73--84. https://doi.org/10.1016/j.scitotenv.2004.04.070.
-
-    \bibitem[Schuessler and Axhausen(2009)]{ref-schuessler}
-    Schuessler, N.; Axhausen, K.W. Processing Raw Data from Global Positioning Systems without Additional Information. \textit{Transportation Research Record} \textbf{2009}, \textit{2105}, 28--36. https://doi.org/10.3141/2105-04.
 
     \bibitem[Tutuianu et al.(2015)]{ref-tutuianu}
     Tutuianu, M.; Bonnel, P.; Ciuffo, B.; Haniu, T.; Ichikawa, N.; Marotta, A.; Pavlovic, J.; Steven, H. Development of the World-wide harmonized Light duty Test Cycle (WLTC) and a possible pathway for its introduction in the European legislation. \textit{Transportation Research Part D} \textbf{2015}, \textit{40}, 61--75. https://doi.org/10.1016/j.trd.2015.07.011.
 
+    \bibitem[Schuessler and Axhausen(2009)]{ref-schuessler}
+    Schuessler, N.; Axhausen, K.W. Processing Raw Data from Global Positioning Systems without Additional Information. \textit{Transportation Research Record} \textbf{2009}, \textit{2105}, 28--36. https://doi.org/10.3141/2105-04.
+
     \bibitem[Zandbergen(2009)]{ref-zandbergen}
     Zandbergen, P.A. Accuracy of iPhone Locations: A Comparison of Assisted GPS, WiFi and Cellular Positioning. \textit{Transactions in GIS} \textbf{2009}, \textit{13}, 5--25. https://doi.org/10.1111/j.1467-9671.2009.01152.x.
 
-    \bibitem[Hu et al.(2022)]{ref-hu}
-    Hu, C.; Li, B.; Ma, L.; Cheng, F. State-of-charge estimation for lithium-ion batteries of electric vehicle based on sensor random error compensation. \textit{Journal of Energy Storage} \textbf{2022}, \textit{55}, 105537. https://doi.org/10.1016/j.est.2022.105537.
+        \bibitem[Taylor and Kuyatt(1994)]{ref-nist}
+        Taylor, B.N.; Kuyatt, C.E. \textit{Guidelines for Evaluating and Expressing the Uncertainty of NIST Measurement Results}; NIST Technical Note 1297; National Institute of Standards and Technology: Gaithersburg, MD, USA, 1994. https://doi.org/10.6028/NIST.TN.1297.
 
-    \bibitem[Zheng et al.(2020)]{ref-zheng}
-    Zheng, C.; Chen, Z.; Huang, D. Fault diagnosis of voltage sensor and current sensor for lithium-ion battery pack using hybrid system modeling and unscented particle filter. \textit{Energy} \textbf{2020}, \textit{191}, 116504. https://doi.org/10.1016/j.energy.2019.116504.
+        \bibitem[JCGM(2008)]{ref-gum}
+        Joint Committee for Guides in Metrology (JCGM). \textit{Evaluation of Measurement Data---Guide to the Expression of Uncertainty in Measurement}; JCGM 100:2008; BIPM: Sèvres, France, 2008. https://doi.org/10.59161/JCGM100-2008E.
 
-    \bibitem[Gurusamy and Ashok(2024)]{ref-gurusamy}
-    Gurusamy, A.; Ashok, B. Establishment of electric two-wheeler driving cycle for energy economy and life cycle assessment under Indian Tier-2 city driving environments. \textit{Sustainable Energy Technologies and Assessments} \textbf{2024}, \textit{66}, 103826. https://doi.org/10.1016/j.seta.2024.103826.
-\end{thebibliography}
+        \bibitem[IEC(2021)]{ref-iec61724}
+        International Electrotechnical Commission (IEC). \textit{IEC 61724-1:2021: Photovoltaic System Performance---Part 1: Monitoring}; IEC: Geneva, Switzerland, 2021. Available online: \url{https://webstore.iec.ch/en/products}.
+
+        \bibitem[SAE International(2021)]{ref-sae1634}
+        SAE International. \textit{SAE J1634\_202104: Electric Vehicle Energy Consumption and Range Test Procedure}; SAE International: Warrendale, PA, USA, 2021. Available online: \url{https://www.sae.org/standards/content/j1634_202104/}.
+
+        \bibitem[Ruetschi(2004)]{ref-ruetschi}
+        Ruetschi, P. Aging mechanisms and service life of lead--acid batteries. \textit{Journal of Power Sources} \textbf{2004}, \textit{127}, 33--44. https://doi.org/10.1016/j.jpowsour.2003.09.052.
+    \end{thebibliography}
 \end{document}
