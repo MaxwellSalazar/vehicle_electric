@@ -1,0 +1,419 @@
+% English-language manuscript for the MDPI journal Vehicles.
+\documentclass[vehicles,article,submit,moreauthors]{Definitions/mdpi}
+
+\firstpage{1}
+\makeatletter
+\setcounter{page}{\@firstpage}
+\makeatother
+\pubvolume{1}
+\issuenum{1}
+\articlenumber{0}
+\pubyear{2026}
+\copyrightyear{2026}
+\datereceived{ }
+\daterevised{ }
+\dateaccepted{ }
+\datepublished{ }
+
+\Title{Field Telemetry and Route Characterization of a Solar-Assisted Light Electric Vehicle: Data-Quality Assessment and Measurement Requirements}
+
+\newcommand{\orcidauthorA}{0009-0001-0880-1457}
+\newcommand{\orcidauthorB}{0000-0003-4243-0597}
+\newcommand{\orcidauthorC}{0009-0007-1592-5160}
+\newcommand{\orcidauthorD}{0000-0002-8454-3306}
+\Author{Santiago Pérez $^{1}$\orcidA{}, Paola Portero $^{1}$\orcidB{}, Carlos Cuaical $^{2}$\orcidC{}, and Maxwell Salazar $^{3,*}$\orcidD{}}
+\AuthorNames{Santiago Pérez, Paola Portero, Carlos Cuaical, and Maxwell Salazar}
+\address{%
+$^{1}$ \quad Electrical Management and Maintenance Department, Instituto Tecnológico Superior Rumiñahui (ISTER), Sangolquí 171103, Ecuador\\
+$^{2}$ \quad Systems and Data Management Department, Instituto Tecnológico Superior Rumiñahui (ISTER), Sangolquí 171103, Ecuador\\
+$^{3}$ \quad Electronics Department, Instituto Tecnológico Superior Rumiñahui (ISTER), Sangolquí 171103, Ecuador}
+\corres{Correspondence: maxwell.salazar@ister.edu.ec}
+
+\abstract{Light electric vehicle prototypes with vehicle-integrated photovoltaics are often evaluated using low-cost telemetry whose measurement chain is rarely documented. This study characterizes field use and audits the telemetry of a single-seat prototype equipped with a 200 Wp photovoltaic array, a 2 kW brushless DC (BLDC) motor, and a 48 V gel-battery bank in Sangolquí, Ecuador (approximately 2500 m above sea level). Of 4277 GPS and electrical records collected in July and August 2026, 3052 records from 11 dates were retained. Eight sessions with at least 100 observations (3029 records) were summarized by session using a block bootstrap. The data revealed a repeatedly traveled route with an extent of approximately 1.4 km (mean speed, 14.7--16.0 km/h) and confined circuits with displacements below 0.15 km (7.7--8.7 km/h). The estimated speed matched the value derived from GPS coordinates (RMSE, 0.003 km/h); therefore, this comparison is not an independent validation. Motor current was bounded at $\pm 6.55$ A (6.9\% of observations), had a session-dependent baseline (mean values ranging from $+0.9$ to $-2.2$ A), and did not respond to speed ($R^2=0.003$) or acceleration ($\rho=-0.01$). The channel labeled as the panel current was bounded at $\pm 3.28$ A, with 34\% zero readings. The current measurement chain does not support estimates of energy consumption or photovoltaic generation; minimum instrumentation requirements are proposed.}
+
+\keyword{light electric vehicle; vehicle-integrated photovoltaics; GPS telemetry; data quality; sensor saturation; field study}
+
+\begin{document}
+
+\section{Introduction}
+
+Vehicle-integrated photovoltaics (VIPV) can turn vehicle surfaces into electricity generators and, in some configurations, supplement the energy stored in the battery. Reviews and modeling studies indicate that VIPV potential depends on active surface area, orientation, shading, temperature, irradiance, and usage patterns; therefore, design estimates cannot replace measurements made on the vehicle \citep{ref-commault,ref-sierra,ref-hoth,ref-kouzelis}. Photovoltaic sizing and installation have also been reported for a small electric go-kart, a vehicle class comparable to the prototype studied here \citep{ref-guerrero}. Field studies that quantify the output of vehicle-mounted modules require measurements of irradiance on the vehicle body and module temperature, together with a description of the driving profile \citep{ref-wetzel,ref-ng,ref-ota-irradiance,ref-ota-driving,ref-ota-curve}. Because irradiance is the main driver of photovoltaic output, machine-learning approaches have also been proposed to predict solar radiation for photovoltaic systems \citep{ref-palomo}.
+
+A growing body of research on light electric vehicles uses low-cost data loggers (GPS and voltage and current sensors) to describe real-world use and estimate energy consumption. These studies assume that each channel measures the quantity indicated by its label, with an adequate range and zero offset. However, the measurement chain is rarely documented, and common problems in field records (zero readings, spurious peaks, saturation, and zero drift) are addressed using filters that are seldom described in detail \citep{ref-bhavsar,ref-alwreikat}. Voltage- and current-sensor errors directly affect derived quantities \citep{ref-hu,ref-zheng}. Real-world driving cycles and GPS data analysis have been used to characterize the use of electric and light vehicles \citep{ref-pfriem,ref-brady,ref-uberti,ref-gurusamy}, but less attention has been paid to the validity of the accompanying electrical signals. Field data for solar-assisted light vehicles at equatorial latitudes and high elevations are also scarce, as is documentation of how telemetry signals from low-cost prototypes are assessed; both are relevant to vehicle development in the Andean region, where sustainable mobility is a growing national concern \citep{ref-antamba}.
+
+The analysis uses field records from a light electric vehicle prototype developed at the Instituto Tecnológico Superior Rumiñahui (ISTER) in Sangolquí, Ecuador, together with the vehicle's technical specifications. Specifically, it (i) characterizes GPS-tracked routes and speeds in an Andean setting, (ii) assesses whether the available electrical telemetry supports estimates of energy consumption or photovoltaic generation, and (iii) derives minimum measurement-chain requirements from the observed data-quality problems.
+The vehicle's solar performance is not evaluated because the available data do not support such an assessment.
+
+\section{Materials and Methods}
+
+\subsection{Vehicle and Documented Specifications}
+
+The prototype is a single-seat vehicle with a steel chassis, chain drive to the rear axle, and a mid-drive 48 V, 2 kW nominal BLDC motor. The motor's maximum design current is 46.3 A (57.9 A including the protection margin stated in the specifications). Two flexible BougeRV Arch100 modules (100 Wp, 100\,$\times$\,60 cm) connected in series form an array with $V_{\mathrm{mp}}=34.2$ V, $V_{\mathrm{oc}}=39.6$ V, and $I_{\mathrm{sc}}=6.16$ A.
+
+The array is wired to a 300 W DC HOUSE MPPT boost converter that accepts an input range of 13 - 65 V, With respect to energy storage, the bank consists of four gel batteries of 12 V and 60 Ah each connected in series, which are valve-regulated lead-acid batteries featuring gelled electrolyte, regarding the vehicle mass no value is provided in the specifications, the layout of the vehicle is shown in Figure~\ref{fig:prototipo}, while the electrical system, along with the channels registered by the telemetry, is illustrated in Figure~\ref{fig:unifilar}.
+
+In addition, the specifications contain computed values for available power, efficiency, range, and design solar conditions (latitude $-0.31^\circ$; 5.08 peak-sun hours). It should be noted that these correspond to design values and not to experimental results. During the experiment, no measurements were taken of irradiance, module temperature, battery state of charge, or energy at the battery terminals.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{auto.jpg}
+    \caption{Illustrative schematic of the prototype: roof-mounted flexible photovoltaic modules, control unit, steel chassis, battery bank, electric motor, chain drive, and rear axle. The figure is descriptive and does not represent measurements.\label{fig:prototipo}}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figuras/fig_2_unifilar_medidas}
+    \caption{Single-line diagram of the system showing the telemetry channels. Nominal values are taken from the technical specifications. The connection points, polarity, and calibration of the voltage and current channels are undocumented (indicated by “?” symbols).\label{fig:unifilar}}
+\end{figure}
+
+\subsection{Data}
+
+Two workbooks containing movement records (July and August 2026) and one consolidated workbook containing the retained data and the exclusion reason for each record were used. The movement workbooks contain 4277 records (3714 from July and 563 from August), previously filtered to estimated speeds between 1 and 120 km/h. The variables are timestamp (typically sampled every 5 s), battery voltage, voltage and current in channels labeled as panel and motor, GPS coordinates, distance increment, and estimated speed. The coordinates are not reproduced as georeferenced tracks; routes are shown in relative local coordinates.
+
+The consolidated workbook contains 3052 retained records (71.4 \%) from 11 dates; 1225 records (28.6 \%) were excluded, a record was excluded if its battery voltage was zero or outside 29.91 - 64.95 V, its panel voltage was zero or outside 4.46 - 54.73 V or its panel current exceeded 100 A in absolute value. Current signs were kept.
+
+A date was considered to have adequate coverage if it contained at least 100 observations, eight dates met this criterion (3029 records).
+
+The other three dates, each with 1 - 18 records, are listed in Table~\ref{tab:sesiones} but were not included in comparisons between sessions. This threshold was used only to organize the analysis; it does not measure data quality or representativeness. Its effect is examined in the sensitivity analysis.
+
+\subsection{Analysis}
+
+\textbf{Movement summary.} For each session, the summaries included the number of records, the sum of distance increments, mean and maximum speed, median speed, and interquartile range (IQR), because movement-based filtering had already been applied and excluded records leave gaps, the sum of the increments may not equal the total distance traveled. Route geometry was described by the maximum displacement from the first point and by the north-south and east-west spans in local coordinates.
+
+\textbf{Speed consistency and driving profile.} The reported speed was compared with the speed derived from coordinates (Haversine distance between consecutive records divided by the time interval, for intervals of 4--6 s) using bias, Bland--Altman limits of agreement, and RMSE. Acceleration was calculated as the difference in reported speed between consecutive records (for intervals of 4--6 s). The speed--acceleration distribution and relative positive acceleration (RPA, $\sum v\,a^{+}\Delta t/\sum v\,\Delta t$) were calculated. Micro-trips were defined as segments of at least six records separated by gaps longer than 30 s. The relationship between acceleration and current was assessed using the Spearman coefficient for each session.
+
+\textbf{Electrical signals.} Recorded electrical power was calculated as $P=V_{\mathrm{bat}}I_{\mathrm{motor}}$, preserving the channel sign, and integrated by session as $E=\sum P_i\Delta t_i$ over intervals of up to 30 s; the specific indicator is $E/d$. These quantities are termed signal indicators because sensor polarity, measurement point, and calibration are unknown.
+
+Current saturation (observations with $|I|\ge 6.55$ A and the duration of consecutive runs), the current baseline (session mean and mean at low speed) and the panel-channel distribution were quantified panel-channel voltage was compared with the array's $V_{\mathrm{mp}}$ and $V_{\mathrm{oc}}$, and its relationship with time of day was examined, a linear regression summarized the relationship between speed and $|P|$. Standard errors were clustered by session (eight clusters), confidence intervals used a $t$ distribution with 7 degrees of freedom, and $R^2$ was reported. The empirical slope $R_{\mathrm{ef}}=-\Delta V_{\mathrm{bat}}/\Delta I_{\mathrm{motor}}$ was estimated using the same correction and session fixed effects; this value describes an observed slope; it is not a measured internal resistance.
+
+\textbf{Uncertainty and sensitivity.} Consecutive observations are autocorrelated, so session-level 95\% confidence intervals (CIs) were calculated with a moving-block bootstrap, each block contained 30 observations and 4000 resamples were used \citep{ref-kunsch}, sensitivity checks varied the minimum coverage threshold (50, 100, 200, and 400 records), maximum integration interval (10, 30, 60, and 120 s), minimum speed (1, 3, and 5 km/h), whether saturated observations were excluded, and block length (15, 30, and 60). Between-month comparisons are described using medians and Cliff's $\delta$ \citep{ref-cliff}; no hypothesis tests were applied to autocorrelated observations. Analyses were run in Python with SciPy and statsmodels \citep{ref-scipy,ref-statsmodels}, using a fixed random seed. The code is included in the project materials.
+
+\section{Results}
+
+\subsection{Coverage and Reasons for Exclusion}
+
+Of the 4277 initial records, 3052 were retained (Table~\ref{tab:exclusion}). Zero battery-voltage readings were the most common reason for exclusion (46.7\% of exclusions), followed by zero panel-voltage readings (40.9\%). A further 35.6\% of excluded records failed more than one criterion, which may indicate simultaneous acquisition losses. Four July dates (11, 13, 18, and 20) had no retained records; 247 records from these dates were excluded. The retained proportion for each date ranged from 2\% to 91\% (Supplementary Table S4). Coverage across retained dates was uneven: three dates had fewer than 100 records (21 July: 18; 23 July: 4; 1 August: 1).
+
+\begin{table}[H]
+    \caption{Reasons for exclusion of the 1225 discarded records. A record may fail more than one criterion.\label{tab:exclusion}}
+    \small
+    \begin{tabular}{l r r}
+        \toprule
+        \textbf{Failed criterion}                & \textbf{Records} & \textbf{\% of exclusions} \\
+        \midrule
+        Zero or invalid battery voltage          & 572              & 46.7                      \\
+        Zero or invalid panel voltage            & 501              & 40.9                      \\
+        Outlier battery voltage (MAD)            & 261              & 21.3                      \\
+        Outlier panel voltage (MAD)              & 229              & 18.7                      \\
+        Panel current out of range ($|I|>100$ A) & 102              & 8.3                       \\
+        \midrule
+        One / two / three criteria               & 789 / 432 / 4    & 64.4 / 35.3 / 0.3         \\
+        \bottomrule
+    \end{tabular}
+    \begin{flushleft}
+        \footnotesize MAD: median absolute deviation (threshold of 6 MAD from the median).
+    \end{flushleft}
+\end{table}
+
+\subsection{Routes and Driving Profile}
+
+The eight sessions with adequate coverage comprised two route types (Table~\ref{tab:sesiones}, Figure~\ref{fig:rutas}). From 27 to 31 July, a route with an approximately 1.4 km north--south extent was repeated, with maximum displacements of 1.24--1.25 km and recorded distances of 7.6--13.0 km. The 25 July session and the two August sessions followed confined circuits, with maximum displacements of 0.06--0.13 km. Session mean speed ranged from 14.7 to 16.0 km/h on the repeated route and from 7.7 to 8.7 km/h on the confined circuits (mean across the eight sessions, 12.54 $\pm$ 3.67 km/h; Supplementary Table S1), the median speed was higher in July than in August (13.99 versus 8.80 km/h; Cliff's $\delta=0.375$), however, route type also differed between the months, so the difference cannot be attributed to month alone.
+
+\begin{table}[H]
+    \caption{Movement records and route metrics by date and route type.\label{tab:sesiones}}
+    \small
+    \setlength{\tabcolsep}{3pt}
+    \begin{tabular}{l r r r r r l}
+        \toprule
+        \textbf{Date} & \textbf{Records} & \parbox{1.6cm}{\centering\textbf{Distance                                           \\(km)}} & \parbox{1.8cm}{\centering\textbf{Mean $v$\\(km/h)}} & \parbox{1.8cm}{\centering\textbf{Max. $v$\\(km/h)}} & \parbox{1.9cm}{\centering\textbf{Max.\\displ. (km)}} & \textbf{Type}\\
+        \midrule
+        21/07         & 18               & 0.080                                     & 3.18  & 11.10 & --   & (low coverage)   \\
+        23/07         & 4                & 0.008                                     & 1.46  & 2.39  & --   & (low coverage)   \\
+        25/07         & 114              & 1.226                                     & 7.74  & 16.87 & 0.10 & Confined circuit \\
+        27/07         & 369              & 7.610                                     & 14.85 & 46.86 & 1.25 & Repeated route   \\
+        28/07         & 448              & 9.966                                     & 16.02 & 49.23 & 1.25 & Repeated route   \\
+        29/07         & 587              & 11.957                                    & 14.67 & 47.55 & 1.24 & Repeated route   \\
+        30/07         & 638              & 13.009                                    & 14.68 & 43.08 & 1.24 & Repeated route   \\
+        31/07         & 504              & 10.944                                    & 15.63 & 40.49 & 1.25 & Repeated route   \\
+        01/08         & 1                & 0.002                                     & 1.09  & 1.09  & --   & (low coverage)   \\
+        11/08         & 173              & 2.091                                     & 8.70  & 17.28 & 0.06 & Confined circuit \\
+        12/08         & 196              & 2.178                                     & 8.00  & 39.02 & 0.13 & Confined circuit \\
+        \bottomrule
+    \end{tabular}
+    \begin{flushleft}
+        \footnotesize Distance is the sum of increments in the retained records and may not represent the full route. Maximum displacement is measured from the first record. Speeds are calculated from GPS coordinates (Section~\ref{sec:gps}).
+    \end{flushleft}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figuras/fig_9_geometria_rutas}
+    \caption{Geometry of the eight sessions, plotted in local coordinates (not georeferenced) and colored by estimated speed. Different scales are used for the repeated route (27--31 July) and the confined circuits (25 July, 11 August, and 12 August).\label{fig:rutas}}
+\end{figure}
+
+The driving profile was calculated from 2414 pairs of consecutive records with time gaps of 4 - 6 s. Mean acceleration was $-0.006$ m/s$^2$ (standard deviation, 0.24 m/s$^2$), the 5th and 95th percentiles were $-0.40$ and $+0.40$ m/s$^2$; the maximum acceleration was $+0.85$ m/s$^2$, and the minimum was $-1.75$ m/s$^2$.
+
+Acceleration above $0.1$ m/s$^2$ occurred in 28.1\% of pairs, while deceleration below $-0.1$ m/s$^2$ occurred in 29.2\%, the Speed was nearly constant in the remaining 42.7\%; RPA was 0.10 m/s$^2$, also speed was below 10 km/h in 40.7\% of observations, between 10 and 20 km/h in 31.8\%, between 20 and 30 km/h in 22.0\%, and at least 30 km/h in 5.4\% (maximum, 49.2 km/h).
+
+The analysis identified 102 micro-trips. Their median duration was 152.5 s (IQR, 75--215 s), median distance was 326 m, and mean speed was 9.8 km/h, there were 161 gaps longer than 30 s, including 111 gaps longer than 60 s, within the sessions, 76.5\% of elapsed time was associated with gaps longer than 30 s.
+
+The records therefore describe vehicle movement, not a complete driving cycle that includes stops (Figure~\ref{fig:perfil}), acceleration levels were modest, as expected for a low-speed light vehicle, comparisons with reference cycles should therefore be qualitative \citep{ref-andre,ref-tutuianu,ref-brady}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{figuras/fig_7_perfil_conduccion}
+    \caption{Driving profile. (a) Joint distribution of speed and acceleration (2414 pairs of consecutive records). (b) Motor current plotted against acceleration. No clear relationship is visible; readings cluster at $0$ and $\pm 6.55$ A, consistent with zero readings and saturation.\label{fig:perfil}}
+\end{figure}
+
+\subsection{Consistency of Speed with GPS Coordinates}\label{sec:gps}
+
+Reported speeds closely matched speeds calculated from 2414 pairs of GPS coordinates. The bias was $-1.6\times10^{-5}$ km/h, the limits of agreement were $\pm 0.006$ km/h, the RMSE was 0.0029 km/h, and the correlation was 0.99999995.
+
+The difference is within the speed's rounding precision of 0.01 km/h; session RMSE values ranged from 0.0028 to 0.0030 km/h, reported distance increments also matched Haversine distances (RMSE, 0.0029 m), because both speed values were calculated from the same GPS positions, this comparison checks consistency rather than providing independent validation. It does not rule out GPS positioning or sampling errors \citep{ref-schuessler,ref-zandbergen}, a independent validation would require a wheel odometer or a reference GNSS receiver.
+
+\subsection{Motor Current: Saturation, Baseline, and Response}
+
+Recorded motor current did not exceed $\pm 6.55$ A (Figure~\ref{fig:potencia}). A total of 210 observations (6.9\%) were at this limit. Most were at the negative limit (6.6\% of observations, compared with 0.3\% at the positive limit), and they occurred mainly from 28 to 31 July (8.3--10.9\% per session, compared with 0--0.5\% in the other sessions). Saturation occurred intermittently in 179 episodes. The median episode lasted 5 s (one observation), and the longest lasted 15 s. Only 4.3\% of saturated observations were part of runs of at least three consecutive records. In addition, 9.4\% of observations had exactly zero current, and 18.1\% were within $\pm 0.5$ A. The 6.55 A limit is 14\% of the motor's maximum design current (46.3 A).
+
+Mean current varied by session (Table~\ref{tab:potencia}). It was $+0.38$ A on 25 July and $+0.90$ A on 27 July. From 28 to 31 July, session means ranged from $-1.78$ to $-2.23$ A; in August, they were $-1.11$ and $-1.52$ A. At speeds below 3 km/h ($n=362$), the median was $-1.40$ A (mean, $-2.03$ A). This offset represents a substantial fraction of the recorded range, and the shift between 27 and 28 July is consistent with a change in polarity, zero offset, or configuration between sessions; the data cannot determine which.
+
+Recorded power had an absolute maximum of 357.5 W (17.9\% of the nominal 2 kW), a mean of $-72.8$ W, and 5th and 95th percentiles of $-314$ and $+188$ W. Its relationship with speed was negligible (Figure~\ref{fig:potencia}): $R^2=0.003$ for the regression of $|P|$ on speed (slope, 0.56 W per km/h; 95\% CI with 7 degrees of freedom, 0.08--1.04) and $R^2$ ranged from 0.001 to 0.066 across the eight sessions. Current also did not respond to acceleration: the pooled Spearman coefficient was $-0.01$ ($n=2414$), with session values from $-0.21$ to $+0.09$ (from $-0.06$ to $+0.18$ for $|I|$). Mean current was $-1.7$ A during weak deceleration and acceleration, $-1.1$ A during strong deceleration, and $-1.0$ A during strong acceleration; standard deviations ranged from 3.1 to 3.5 A. A traction-current sensor should show a clear relationship between current and acceleration. Removing saturated observations did not change this result ($R^2=0.0004$).
+
+\begin{table}[H]
+    \caption{Recorded motor current and calculated power by session. These are signal indicators, not energy-consumption measurements; 95\% CIs were calculated by block bootstrap.\label{tab:potencia}}
+    \small
+    \setlength{\tabcolsep}{3pt}
+    \begin{tabular}{l r r r r r}
+        \toprule
+        \textbf{Date} & \textbf{$n$} & \parbox{1.7cm}{\centering\textbf{Mean $I_{\mathrm{motor}}$                                                              \\(A)}} & \parbox{1.7cm}{\centering\textbf{Saturation\\(\%)}} & \parbox{2.9cm}{\centering\textbf{Mean $P$ (W)\\(95\% CI)}} & \parbox{2.9cm}{\centering\textbf{Gross energy\\(Wh/km; 95\% CI)}}\\
+        \midrule
+        25/07         & 114          & $+0.38$                                                    & 0.0  & 16.2 ($-$4.1; 66.0)          & 15.97 (13.90--18.95) \\
+        27/07         & 369          & $+0.90$                                                    & 0.5  & 38.5 (13.3; 65.0)            & 6.37 (4.94--7.43)    \\
+        28/07         & 448          & $-1.93$                                                    & 8.5  & $-$95.4 ($-$126.9; $-$78.2)  & 9.57 (7.29--12.27)   \\
+        29/07         & 587          & $-1.78$                                                    & 8.3  & $-$88.0 ($-$118.8; $-$63.6)  & 12.75 (9.37--16.59)  \\
+        30/07         & 638          & $-2.06$                                                    & 10.2 & $-$98.6 ($-$123.2; $-$62.4)  & 11.29 (8.53--13.91)  \\
+        31/07         & 504          & $-2.23$                                                    & 10.9 & $-$107.3 ($-$128.7; $-$79.1) & 10.68 (8.77--12.09)  \\
+        11/08         & 173          & $-1.11$                                                    & 0.0  & $-$57.3 ($-$102.5; $-$21.3)  & 16.32 (12.37--22.64) \\
+        12/08         & 196          & $-1.52$                                                    & 0.5  & $-$77.9 ($-$117.9; $-$19.6)  & 20.69 (14.54--23.94) \\
+        \bottomrule
+    \end{tabular}
+    \begin{flushleft}
+        \footnotesize $P=V_{\mathrm{bat}}I_{\mathrm{motor}}$ was calculated using the recorded channel signs. Gross energy was calculated by integrating $|P|$ over intervals of up to 30 s and dividing by the distance covered during those intervals. Channel polarity is undocumented.
+    \end{flushleft}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figuras/fig_5_potencia_energia}
+    \caption{Recorded electrical power. (a) $V_{\mathrm{bat}}I_{\mathrm{motor}}$ plotted against estimated speed. (b) Power distribution by session; the sign differs across dates. (c) Gross energy per kilometer, with 95\% CIs calculated by block bootstrap. In (a), the $\pm 320$ W limits correspond to current saturation.\label{fig:potencia}}
+\end{figure}
+
+The energy indicator changed more with the processing settings than with the route, its mean across sessions was 12.96 Wh/km when the maximum interval was 30 s.
+
+With interval limits of 10, 60, and 120 s, the mean was 11.6, 15.2, and 18.8 Wh/km, respectively. With minimum speeds of 1, 3, and 5 km/h, it was 13.0, 11.5, and 10.4 Wh/km, respectively (Supplementary Table S5). Because the indicator also depends on channel polarity and zero offset, it cannot be interpreted as vehicle energy consumption.
+
+\subsection{Panel Channel}
+
+Across the eight analyzed sessions, current in the channel labeled as panel current never exceeded $\pm 3.28$ A, readings were at this limit in 14.0\% of observations (13.97\% at $+3.28$ A); 34.4\% of readings were zero, the median was 0.54 A, and the 5th and 95th percentiles were $-0.92$ and $+3.28$ A, the observed limit is close to the converter's specified design current injected into the bus (3.51 A). However, these data cannot show whether the limit comes from the converter or the sensor. Panel current was negatively correlated with motor current ($\rho=-0.45$), which suggests that the channels may not be independent or may share a reference.
+
+The most extreme readings came from the 21 July session, which was not one of the eight analyzed sessions. Its 18 retained observations ranged from $-91.9$ to $68.0$ A; 12 exceeded the module's 6.16 A short-circuit current in absolute value. Another 98 records from that date were excluded because they exceeded 100 A, and the largest excluded reading was 3200 A. Such values are implausible in a circuit with a 6.16 A module, and they are outside the analyzed sessions.
+
+Channel voltage ranged from 7.4 to 40.3 V, with a median of 30.0 V (Figure~\ref{fig:panel}a), in 87.3\% of observations, voltage was below the array's $V_{\mathrm{mp}}$ (34.2 V); 12.5\% fell between $V_{\mathrm{mp}}$ and $V_{\mathrm{oc}}$ (39.6 V), and only 0.2\% exceeded $V_{\mathrm{oc}}$, the recorded values fall within the converter's input range (13--65 V), but this alone does not identify where the channel was connected.
+
+From 09:00 to 14:00, no clear relationship with time of day was observed, spearman correlations with time were $-0.05$ for voltage and $-0.02$ for current; median session-level correlations were $-0.08$ and $0.01$, respectively, hourly median voltages also varied between sessions without a shared trend (Figure~\ref{fig:panel}b).
+
+This lack of a pattern could reflect nearly constant irradiance during the measurement period; it does not show that the channel is insensitive to irradiance, without a pyranometer or reference cell, the readings cannot be linked to incident solar radiation.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figuras/fig_8_canal_panel}
+    \caption{Channel labeled as panel. (a) Measured voltage compared with the array's documented $V_{\mathrm{mp}}$ and $V_{\mathrm{oc}}$. (b) Median voltage by local time and session.\label{fig:panel}}
+\end{figure}
+
+\subsection{Empirical Slope of Battery Voltage}
+
+Battery voltage decreased as recorded motor current increased in all eight sessions, with an empirical slope $R_{\mathrm{ef}}$ of 0.15--0.73 $\Omega$ (mean, 0.30 $\Omega$; 95\% $t$-CI, 0.15--0.45; Supplementary Table S2). The pooled estimate with session fixed effects was 0.24 $\Omega$ (95\% CI with clustered errors and 7 degrees of freedom, 0.15--0.33; $R^2=0.15$). This slope is not an internal resistance: it is confounded by state of charge, temperature, and battery relaxation. Because controllers typically draw current depending on the available voltage, causality may operate in either direction. With eight sessions and current not exceeding 6.55 A, the result cannot be extrapolated to traction currents.
+
+\subsection{Sensitivity of Results to Analytical Decisions}
+
+The qualitative results are robust (Supplementary Table S5). The $R^2$ between speed and $|P|$ ranged from 0.0024 to 0.0028 for all minimum-coverage thresholds; saturation ranged from 6.9\% to 9.5\% (and from 7.3\% to 7.6\% with minimum speeds of 3 and 5 km/h); and maximum $|P|$ remained between 355 and 357 W. In contrast, integrated indicators depend on processing: with a minimum coverage of 200 records (five sessions), mean session speed increased from 12.5 to 15.2 km/h and gross energy decreased from 12.96 to 10.13 Wh/km. Doubling the block length from 30 to 60 increased the mean width of the speed CIs from 4.6 to 5.3 km/h.
+
+\subsection{From Findings to Measurement Requirements}
+
+Table~\ref{tab:hallazgos} summarizes the findings, the measurement failure they suggest, and the requirement that would address it. The failures are hypotheses about the measurement chain and should be verified through bench testing and system documentation.
+
+\begin{table}[H]
+    \caption{Findings, associated measurement failure, and requirement for the next campaign.\label{tab:hallazgos}}
+    \footnotesize
+    \setlength{\tabcolsep}{3pt}
+    \renewcommand{\arraystretch}{1.1}
+    \begin{tabular}{p{4.0cm} p{3.9cm} p{5.6cm}}
+        \toprule
+        \textbf{Finding} & \textbf{Suggested measurement failure}                                                                                                                                                       & \textbf{Requirement for the next campaign} \\
+        \midrule
+        $I_{\mathrm{motor}}$ bounded at $\pm 6.55$ A (6.9\%; 14\% of the 46.3 A design current)
+                         & Insufficient sensor or converter range, or signal clipping
+                         & Current sensor with a range of $\ge 60$ A (above the 57.9 A design current, including protection margin) and adequate resolution at cruising currents; verify using a calibrated clamp meter                                              \\
+        Session-dependent $I_{\mathrm{motor}}$ baseline ($+0.9$ to $-2.2$ A); 9.4\% exact zeros
+                         & Zero offset, polarity or configuration change; data loss recorded as zero
+                         & Record zero with the vehicle stopped and circuit unloaded at the beginning and end of each session; document polarity and setup changes; encode missing data                                                                              \\
+        $I_{\mathrm{motor}}$ does not depend on speed ($R^2=0.003$) or acceleration ($\rho=-0.01$)
+                         & Channel does not measure total traction current
+                         & Measure battery-bus and controller current using independent sensors and sampling at $\ge 1$ Hz                                                                                                                                           \\
+        Panel channel: $\pm 3.28$ A, 34\% zeros, values from $-91.9$ to $68.0$ A on 21 July, and peaks up to 3200 A in excluded records
+                         & Sensor or converter limit; defective scaling or connection
+                         & Current and voltage sensors at the MPPT input and output, with documented measurement points and calibration before each campaign                                                                                                         \\
+        No time-of-day pattern in $V_{\mathrm{panel}}$; no irradiance reference
+                         & Missing synchronized environmental variable
+                         & Pyranometer or reference cell in the module plane, module temperature, and battery state of charge, all with a common timestamp                                                                                                           \\
+        Speed identical to the GPS-derived value (RMSE, 0.003 km/h); 76.5\% of elapsed time in gaps
+                         & No independent speed reference; only movement is recorded
+                         & Wheel odometer or reference GNSS; also record stops at uniform intervals                                                                                                                                                                  \\
+        28.6\% of records excluded (46.7\% due to zero battery voltage)
+                         & Acquisition or communication losses
+                         & Record error codes rather than zeros; perform online quality control and retain raw-data copies                                                                                                                                           \\
+        Specific energy ranges from 10.4 to 18.8 Wh/km depending on processing
+                         & Irregular sampling and discontinuous records
+                         & Continuous, uniform sampling to enable energy integration without interval caps                                                                                                                                                           \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\section{Discussion}
+
+The data characterize prototype use: the repeated route and confined circuits differ in speed and geometry, and the driving profile features low acceleration and speeds predominantly below 20 km/h. Within - and between-session variability supports the view that a standardized cycle alone does not represent these usage patterns and that local cycles should be derived from local measurements \citep{ref-pfriem,ref-brady,ref-uberti}, however, the data cannot establish a complete driving cycle, daily distance, range, or energy consumption, Prior movement-based filtering and gaps longer than 30 s leave too much of the travel record incomplete.
+
+The electrical telemetry cannot support standard performance claims for a vehicle with integrated photovoltaics, motor-current readings reach a fixed limit, the baseline changes between sessions, and current does not vary with speed or acceleration, the panel-current channel also reaches a fixed limit, and about one-third of its readings are zero.
+
+These signals do not show that the photovoltaic system contributed energy. Multiplying voltage by current cannot provide reliable energy estimates unless calibration, synchronization, sign convention, and measurement location are verified \citep{ref-nist,ref-gum}, the energy indicator also changes substantially when the integration interval is changed, which further limits its interpretation. The shift in current baseline around 27 July suggests that any setup changes should be recorded for each session.
+
+Studies that measure photovoltaic output while a vehicle is moving record both irradiance and the module's electrical response \citep{ref-wetzel,ref-ng,ref-ota-irradiance,ref-ota-driving}, the photovoltaic monitoring standards also specify the variables and measurement points that should be defined \citep{ref-iec61724}, the irradiance and module temperature were not recorded in this study, and the current channels have fixed limits and zero readings.
+
+The sensor locations, polarity, and calibration are undocumented, so these records alone cannot identify the causes of the observed problems. Table~\ref{tab:hallazgos} turns these measurement gaps into a minimum instrumentation protocol for future studies of solar contributions to traction. A standardized energy-consumption and range test \citep{ref-sae1634} would be meaningful only after the measurement chain has been verified.
+
+\subsection{Limitations}
+
+This study includes one vehicle, eight sessions with adequate data coverage in July and August 2026, and two route types. Because the sessions were not controlled replicates, the findings cannot be generalized to other vehicles, routes, or seasons. The sensor calibration and polarity, the actual measurement schematic, the vehicle mass, and the algorithms used to calculate speed and distance are unknown. Earlier movement-based filtering and the exclusion criteria also affect the dataset; using a 100-record threshold does not remove the resulting risk of selection bias. The block-bootstrap CIs account for temporal dependence, but comparisons based on only eight sessions are indicative. Specific-energy indicators and the empirical slope rely on signals with unknown calibration. Gel-battery capacity and aging were not evaluated \citep{ref-ruetschi}; irradiance, temperature, and state of charge were not measured. As a result, the data do not support conclusions about MPPT performance, solar contribution to traction, regenerative recovery, cost savings, or emissions reductions.
+
+\section{Conclusions}
+
+\begin{enumerate}
+    \item Of 4277 movement records, 3052 records across 11 dates were retained; eight sessions (3029 records) supported between-session analysis. Zero battery-voltage readings accounted for 46.7\% of exclusions.
+    \item Prototype use comprised a repeated route of approximately 1.4 km (mean speed, 14.7--16.0 km/h) and confined circuits (7.7--8.7 km/h), with moderate acceleration (5th and 95th percentiles: $\pm 0.40$ m/s$^2$) and speeds predominantly below 20 km/h.
+    \item The reported speed is derived from GPS coordinates; no independent validation is available.
+    \item Motor-current readings are limited to $\pm 6.55$ A, their baseline varies by session, and they show no relationship with speed or acceleration, the panel-channel current is limited to $\pm 3.28$ A, and 34\% of its readings are zero., the current measurement chain does not support estimates of energy consumption or photovoltaic generation.
+    \item The observed measurement failures translate into specific instrumentation requirements: an appropriate current range, zero-offset and polarity verification, measurements at the MPPT input and output, synchronized irradiance, an independent speed reference, and continuous logging with error codes.
+\end{enumerate}
+
+\authorcontributions{Conceptualization, S.P; methodology, C.C.; software, C.C.; validation, S.P., M.S. and P.P.; formal analysis, P.P.; investigation, M.S.; resources, S.P.; data curation, C.C.; writing---original draft preparation, M.S.; writing---review and editing, S.P.; supervision, P.P.; project administration, S.P.; funding acquisition, S.P. All authors have read and agreed to the published version of the manuscript.}
+\funding{This work was supported by the Instituto Tecnológico Superior Rumiñahui (ISTER) through its research department.}
+\dataavailability{The data used in this manuscript are available at \url{https://github.com/MaxwellSalazar/vehicle_electric.git}.}
+\acknowledgments{The prototype was developed and field-tested with institutional and financial support from the Instituto Tecnológico Superior Rumiñahui (ISTER). The authors thank the researchers, students, and administrative staff who contributed to vehicle design, data collection, and field testing in Sangolquí.}
+\conflictsofinterest{The authors declared no potential conflicts of interest with respect to the research, authorship, and/or publication of this article.}
+
+\section*{Abbreviations}
+\noindent
+BLDC: brushless direct current; GNSS: Global Navigation Satellite System; GPS: Global Positioning System; CI: confidence interval; MAD: median absolute deviation; MPPT: maximum power point tracking; IQR: interquartile range; RPA: relative positive acceleration; VIPV: vehicle-integrated photovoltaics; VRLA: valve-regulated lead-acid; Wp: watt-peak.
+
+\reftitle{References}
+\begin{thebibliography}{999}
+    \bibitem[Commault et al.(2021)]{ref-commault}
+    Commault, B.; Duigou, T.; Maneval, V.; Gaume, J.; Chabuel, F.; Voroshazi, E. Overview and Perspectives for Vehicle-Integrated Photovoltaics. \textit{Applied Sciences} \textbf{2021}, \textit{11}, 11598. https://doi.org/10.3390/app112411598.
+
+    \bibitem[Sierra Rodriguez et al.(2020)]{ref-sierra}
+    Sierra Rodriguez, A.; de Santana, T.; MacGill, I.; Ekins-Daukes, N.J.; Reinders, A. A feasibility study of solar PV-powered electric cars using an interdisciplinary modeling approach for the electricity balance, CO$_2$ emissions, and economic aspects: The cases of The Netherlands, Norway, Brazil, and Australia. \textit{Progress in Photovoltaics: Research and Applications} \textbf{2020}, \textit{28}, 517--532. https://doi.org/10.1002/pip.3202.
+
+    \bibitem[Hoth et al.(2024)]{ref-hoth}
+    Hoth, P.; Heide, L.; Grahle, A.; Göhlich, D. Vehicle-Integrated Photovoltaics---A Case Study for Berlin. \textit{World Electric Vehicle Journal} \textbf{2024}, \textit{15}, 113. https://doi.org/10.3390/wevj15030113.
+
+    \bibitem[Kouzelis et al.(2025)]{ref-kouzelis}
+    Kouzelis, A.; Linders, K.; Bandyopadhyay, S.; Mouli, G.R.C. Analysis of vehicle-integrated photovoltaics and vehicle-to-grid on electric vehicle battery life. \textit{Journal of Power Sources} \textbf{2025}, \textit{631}, 236117. https://doi.org/10.1016/j.jpowsour.2024.236117.
+
+    \bibitem[Guerrero Peña et al.(2025)]{ref-guerrero}
+    Guerrero Peña, F.J.; Montaño Tinoco, D.P.; Granda Gutiérrez, D.E. Dimensionamiento e implementación del sistema fotovoltaico a un gokart eléctrico. \textit{CONECTIVIDAD} \textbf{2025}, \textit{6}, 17--28. https://doi.org/10.37431/conectividad.v6i3.264.
+
+    \bibitem[Wetzel et al.(2022)]{ref-wetzel}
+    Wetzel, G.; Salomon, L.; Krügener, J.; Bredemeier, D.; Peibst, R. High time resolution measurement of solar irradiance onto driving car body for vehicle integrated photovoltaics. \textit{Progress in Photovoltaics: Research and Applications} \textbf{2022}, \textit{30}, 543--551. https://doi.org/10.1002/pip.3526.
+
+    \bibitem[Ng et al.(2020)]{ref-ng}
+    Ng, C.W.X.; Zhang, J.; Tay, S.E.R. A Tropical Case Study Quantifying Solar Irradiance Collected on a Car Roof for Vehicle Integrated Photovoltaics Towards Low-Carbon Cities. In \textit{Proceedings of the 2020 47th IEEE Photovoltaic Specialists Conference (PVSC)}, Calgary, AB, Canada, 15--21 June 2020; pp. 2461--2464. https://doi.org/10.1109/PVSC45281.2020.9300351.
+
+    \bibitem[Ota et al.(2019)]{ref-ota-irradiance}
+    Ota, Y.; Masuda, T.; Araki, K.; Yamaguchi, M. A mobile multipyranometer array for the assessment of solar irradiance incident on a photovoltaic-powered vehicle. \textit{Solar Energy} \textbf{2019}, \textit{184}, 84--90. https://doi.org/10.1016/j.solener.2019.03.084.
+
+    \bibitem[Ota et al.(2021)]{ref-ota-driving}
+    Ota, Y.; Araki, K.; Nagaoka, A.; Nishioka, K. Evaluating the output of a car-mounted photovoltaic module under driving conditions. \textit{IEEE Journal of Photovoltaics} \textbf{2021}, \textit{11}, 1299--1304. https://doi.org/10.1109/JPHOTOV.2021.3087748.
+
+    \bibitem[Ota et al.(2022)]{ref-ota-curve}
+    Ota, Y.; Araki, K.; Nagaoka, A.; Nishioka, K. Curve correction of vehicle-integrated photovoltaics using statistics on commercial car bodies. \textit{Progress in Photovoltaics: Research and Applications} \textbf{2022}, \textit{30}, 152--163. https://doi.org/10.1002/pip.3473.
+
+    \bibitem[Palomo et al.(2025)]{ref-palomo}
+    Palomo, W.; Quinatoa, C.; Mullo, M.; Castillo, J. Predicción de radiación solar en sistemas fotovoltaicos utilizando técnicas de aprendizaje automático. \textit{CONECTIVIDAD} \textbf{2025}, \textit{6}, 338--355. https://doi.org/10.37431/conectividad.v6i1.196.
+
+    \bibitem[Bhavsar et al.(2024)]{ref-bhavsar}
+    Bhavsar, D.; Jaychandra, R.K.; Mittal, M. Data acquisition and performance analysis during real-time driving of a two-wheeler electric vehicle---A case study. \textit{World Electric Vehicle Journal} \textbf{2024}, \textit{15}, 121. https://doi.org/10.3390/wevj15030121.
+
+    \bibitem[Al-Wreikat et al.(2021)]{ref-alwreikat}
+    Al-Wreikat, Y.; Serrano, C.; Sodré, J.R. Driving behaviour and trip condition effects on the energy consumption of an electric vehicle under real-world driving. \textit{Applied Energy} \textbf{2021}, \textit{297}, 117096. https://doi.org/10.1016/j.apenergy.2021.117096.
+
+    \bibitem[Hu et al.(2022)]{ref-hu}
+    Hu, C.; Li, B.; Ma, L.; Cheng, F. State-of-charge estimation for lithium-ion batteries of electric vehicle based on sensor random error compensation. \textit{Journal of Energy Storage} \textbf{2022}, \textit{55}, 105537. https://doi.org/10.1016/j.est.2022.105537.
+
+    \bibitem[Zheng et al.(2020)]{ref-zheng}
+    Zheng, C.; Chen, Z.; Huang, D. Fault diagnosis of voltage sensor and current sensor for lithium-ion battery pack using hybrid system modeling and unscented particle filter. \textit{Energy} \textbf{2020}, \textit{191}, 116504. https://doi.org/10.1016/j.energy.2019.116504.
+
+    \bibitem[Pfriem and Gauterin(2016)]{ref-pfriem}
+    Pfriem, M.; Gauterin, F. Development of real-world driving cycles for battery electric vehicles. \textit{World Electric Vehicle Journal} \textbf{2016}, \textit{8}, 14--24. https://doi.org/10.3390/wevj8010014.
+
+    \bibitem[Brady and O'Mahony(2016)]{ref-brady}
+    Brady, J.; O'Mahony, M. Development of a driving cycle to evaluate the energy economy of electric vehicles in urban areas. \textit{Applied Energy} \textbf{2016}, \textit{177}, 165--178. https://doi.org/10.1016/j.apenergy.2016.05.094.
+
+    \bibitem[Uberti et al.(2020)]{ref-uberti}
+    Uberti, S.; Azzini, G.; Beltrami, D.; Tribioli, L.; Iora, P. Modelling of a 15-kW electric utility vehicle and range assessment through driving cycle analysis based on GPS experimental data. SAE Technical Paper 2020-24-0018, 2020. https://doi.org/10.4271/2020-24-0018.
+
+    \bibitem[Gurusamy and Ashok(2024)]{ref-gurusamy}
+    Gurusamy, A.; Ashok, B. Establishment of electric two-wheeler driving cycle for energy economy and life cycle assessment under Indian Tier-2 city driving environments. \textit{Sustainable Energy Technologies and Assessments} \textbf{2024}, \textit{66}, 103826. https://doi.org/10.1016/j.seta.2024.103826.
+
+    \bibitem[Antamba Guasgua et al.(2025)]{ref-antamba}
+    Antamba Guasgua, J.; Ortiz Álvarez, D.; Vacacela Mazón, P.; Flores, J.C. Movilidad sostenible. Caso de estudio: Ecuador. \textit{CONECTIVIDAD} \textbf{2025}, \textit{6}, 236--245. https://doi.org/10.37431/conectividad.v6i3.216.
+
+    \bibitem[Künsch(1989)]{ref-kunsch}
+    Künsch, H.R. The Jackknife and the Bootstrap for General Stationary Observations. \textit{The Annals of Statistics} \textbf{1989}, \textit{17}, 1217--1241. https://doi.org/10.1214/aos/1176347265.
+
+    \bibitem[Cliff(1993)]{ref-cliff}
+    Cliff, N. Dominance Statistics: Ordinal Analyses to Answer Ordinal Questions. \textit{Psychological Bulletin} \textbf{1993}, \textit{114}, 494--509. https://doi.org/10.1037/0033-2909.114.3.494.
+
+    \bibitem[Virtanen et al.(2020)]{ref-scipy}
+    Virtanen, P.; Gommers, R.; Oliphant, T.E.; et al. SciPy 1.0: Fundamental Algorithms for Scientific Computing in Python. \textit{Nature Methods} \textbf{2020}, \textit{17}, 261--272. https://doi.org/10.1038/s41592-019-0686-2.
+
+    \bibitem[Seabold and Perktold(2010)]{ref-statsmodels}
+    Seabold, S.; Perktold, J. statsmodels: Econometric and Statistical Modeling with Python. In Proceedings of the 9th Python in Science Conference, Austin, TX, USA, 28 June--3 July 2010; pp. 92--96. https://doi.org/10.25080/Majora-92bf1922-011.
+
+    \bibitem[André et al.(2004)]{ref-andre}
+    André, M. The ARTEMIS European driving cycles for measuring car pollutant emissions. \textit{Science of the Total Environment} \textbf{2004}, \textit{334--335}, 73--84. https://doi.org/10.1016/j.scitotenv.2004.04.070.
+
+    \bibitem[Tutuianu et al.(2015)]{ref-tutuianu}
+    Tutuianu, M.; Bonnel, P.; Ciuffo, B.; Haniu, T.; Ichikawa, N.; Marotta, A.; Pavlovic, J.; Steven, H. Development of the World-wide harmonized Light duty Test Cycle (WLTC) and a possible pathway for its introduction in the European legislation. \textit{Transportation Research Part D} \textbf{2015}, \textit{40}, 61--75. https://doi.org/10.1016/j.trd.2015.07.011.
+
+    \bibitem[Schuessler and Axhausen(2009)]{ref-schuessler}
+    Schuessler, N.; Axhausen, K.W. Processing Raw Data from Global Positioning Systems without Additional Information. \textit{Transportation Research Record} \textbf{2009}, \textit{2105}, 28--36. https://doi.org/10.3141/2105-04.
+
+    \bibitem[Zandbergen(2009)]{ref-zandbergen}
+    Zandbergen, P.A. Accuracy of iPhone Locations: A Comparison of Assisted GPS, WiFi and Cellular Positioning. \textit{Transactions in GIS} \textbf{2009}, \textit{13}, 5--25. https://doi.org/10.1111/j.1467-9671.2009.01152.x.
+
+    \bibitem[Taylor and Kuyatt(1994)]{ref-nist}
+    Taylor, B.N.; Kuyatt, C.E. \textit{Guidelines for Evaluating and Expressing the Uncertainty of NIST Measurement Results}; NIST Technical Note 1297; National Institute of Standards and Technology: Gaithersburg, MD, USA, 1994. https://doi.org/10.6028/NIST.TN.1297.
+
+    \bibitem[JCGM(2008)]{ref-gum}
+    Joint Committee for Guides in Metrology (JCGM). \textit{Evaluation of Measurement Data---Guide to the Expression of Uncertainty in Measurement}; JCGM 100:2008; BIPM: Sèvres, France, 2008. https://doi.org/10.59161/JCGM100-2008E.
+
+    \bibitem[IEC(2021)]{ref-iec61724}
+    International Electrotechnical Commission (IEC). \textit{IEC 61724-1:2021: Photovoltaic System Performance---Part 1: Monitoring}; IEC: Geneva, Switzerland, 2021. Available online: \url{https://webstore.iec.ch/en/products}.
+
+    \bibitem[SAE International(2021)]{ref-sae1634}
+    SAE International. \textit{SAE J1634\_202104: Electric Vehicle Energy Consumption and Range Test Procedure}; SAE International: Warrendale, PA, USA, 2021. Available online: \url{https://www.sae.org/standards/content/j1634_202104/}.
+
+    \bibitem[Ruetschi(2004)]{ref-ruetschi}
+    Ruetschi, P. Aging mechanisms and service life of lead--acid batteries. \textit{Journal of Power Sources} \textbf{2004}, \textit{127}, 33--44. https://doi.org/10.1016/j.jpowsour.2003.09.052.
+\end{thebibliography}
+\end{document}

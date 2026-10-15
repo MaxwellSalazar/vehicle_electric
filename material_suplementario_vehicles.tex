@@ -1,0 +1,122 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{booktabs,geometry,amsmath,graphicx}
+\geometry{margin=2.2cm}
+\title{Supplementary Materials: Field Telemetry and Route Characterization of a Solar-Assisted Light Electric Vehicle}
+\author{Pérez, S.; Portero, P.; Cuaical, C.; Salazar, M.}
+\date{}
+\begin{document}
+\maketitle
+\small
+
+\section*{Table S1. Estimated speed by session}
+\begin{center}
+\begin{tabular}{lrrrrr}
+\toprule
+Date & $n$ & Mean (km/h) & 95\% CI & Median (km/h) & $n_{\mathrm{eff}}$\\
+\midrule
+25/07 & 114 & 7.74 & 6.97--8.84 & 7.31 & 19\\
+27/07 & 369 & 14.85 & 12.49--18.85 & 14.38 & 33\\
+28/07 & 448 & 16.02 & 13.41--19.99 & 15.16 & 30\\
+29/07 & 587 & 14.67 & 11.91--18.56 & 12.73 & 28\\
+30/07 & 638 & 14.68 & 12.22--18.07 & 13.52 & 33\\
+31/07 & 504 & 15.63 & 13.92--18.35 & 15.55 & 37\\
+11/08 & 173 & 8.70 & 7.59--9.73 & 9.36 & 33\\
+12/08 & 196 & 8.00 & 7.41--9.65 & 8.38 & 57\\
+\bottomrule
+\end{tabular}
+\end{center}
+95\% CIs from a block bootstrap with blocks of 30 observations; $n_{\mathrm{eff}}$: effective sample size accounting for first-order autocorrelation.
+
+\section*{Table S2. Descriptive Spearman coefficients and empirical voltage slope by session}
+\begin{center}
+\begin{tabular}{lrrrrr}
+\toprule
+Date & $\rho(v,I)$ & $\rho(v,|I|)$ & $R_{\mathrm{ef}}$ ($\Omega$) & 95\% CI & $R^2$\\
+\midrule
+25/07 & 0.22 & 0.13 & 0.310 & 0.187--0.432 & 0.22\\
+27/07 & 0.30 & 0.12 & 0.728 & 0.472--0.983 & 0.14\\
+28/07 & -0.09 & 0.06 & 0.206 & 0.143--0.269 & 0.10\\
+29/07 & 0.06 & 0.07 & 0.193 & 0.129--0.256 & 0.09\\
+30/07 & 0.04 & 0.08 & 0.234 & 0.119--0.348 & 0.05\\
+31/07 & -0.04 & 0.08 & 0.146 & 0.043--0.249 & 0.02\\
+11/08 & 0.29 & -0.15 & 0.316 & 0.138--0.495 & 0.15\\
+12/08 & 0.43 & -0.33 & 0.267 & 0.108--0.426 & 0.09\\
+\bottomrule
+\end{tabular}
+\end{center}
+With eight sessions, the coefficients are descriptive and are not accompanied by hypothesis tests. The quantity $R_{\mathrm{ef}}$ is defined as $-\Delta V_{\mathrm{bat}}/\Delta I_{\mathrm{motor}}$ and represents an empirical slope, not an internal resistance.
+
+\section*{Table S3. Session geometry (local coordinates)}
+\begin{center}
+\begin{tabular}{lrrrr}
+\toprule
+Date & Path length (km) & Max. displacement (km) & N--S extent (km) & E--W extent (km)\\
+\midrule
+25/07 & 1.226 & 0.10 & 0.07 & 0.10\\
+27/07 & 7.610 & 1.25 & 1.39 & 0.59\\
+28/07 & 9.966 & 1.25 & 1.38 & 0.83\\
+29/07 & 11.957 & 1.24 & 1.39 & 0.52\\
+30/07 & 13.009 & 1.24 & 1.39 & 0.53\\
+31/07 & 10.944 & 1.25 & 1.39 & 0.53\\
+11/08 & 2.091 & 0.06 & 0.06 & 0.11\\
+12/08 & 2.178 & 0.13 & 0.05 & 0.13\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section*{Table S4. Records retained and excluded by date}
+\begin{center}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lrrrrrr}
+\toprule
+Date & Retained & Excluded & \% retained & Zero $V_{\mathrm{bat}}$ & Zero $V_{\mathrm{panel}}$ & Out-of-range $I_{\mathrm{panel}}$\\
+\midrule
+11/07 & 0 & 83 & 0.0 & 2 & 3 & 0\\
+13/07 & 0 & 143 & 0.0 & 15 & 15 & 0\\
+18/07 & 0 & 17 & 0.0 & 0 & 0 & 0\\
+20/07 & 0 & 4 & 0.0 & 2 & 0 & 4\\
+21/07 & 18 & 125 & 12.6 & 19 & 19 & 98\\
+23/07 & 4 & 19 & 17.4 & 10 & 17 & 0\\
+25/07 & 114 & 93 & 55.1 & 76 & 40 & 0\\
+27/07 & 369 & 176 & 67.7 & 85 & 117 & 0\\
+28/07 & 448 & 109 & 80.4 & 92 & 32 & 0\\
+29/07 & 587 & 120 & 83.0 & 99 & 44 & 0\\
+30/07 & 638 & 94 & 87.2 & 63 & 44 & 0\\
+31/07 & 504 & 49 & 91.1 & 32 & 22 & 0\\
+01/08 & 1 & 45 & 2.2 & 33 & 37 & 0\\
+11/08 & 173 & 68 & 71.8 & 23 & 49 & 0\\
+12/08 & 196 & 80 & 71.0 & 21 & 62 & 0\\
+\bottomrule
+\end{tabular}
+}
+\end{center}
+Categories are not mutually exclusive.
+
+\section*{Table S5. Sensitivity to analytical decisions}
+\begin{center}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lrrrrrr}
+\toprule
+Scenario & Sessions & $n$ & Mean $v$ (km/h) & Saturation (\%) & Gross energy (Wh/km) & $R^2(v,|P|)$\\
+\midrule
+Minimum coverage 50 & 8 & 3029 & 12.54 & 6.9 & 12.96 & 0.0026\\
+Minimum coverage 100 (baseline) & 8 & 3029 & 12.54 & 6.9 & 12.96 & 0.0026\\
+Minimum coverage 200 & 5 & 2546 & 15.17 & 8.2 & 10.13 & 0.0028\\
+Minimum coverage 400 & 4 & 2177 & 15.25 & 9.5 & 11.08 & 0.0024\\
+Interval cap 10 s & -- & -- & -- & -- & 11.59 & --\\
+Interval cap 30 s & -- & -- & -- & -- & 12.96 & --\\
+Interval cap 60 s & -- & -- & -- & -- & 15.25 & --\\
+Interval cap 120 s & -- & -- & -- & -- & 18.84 & --\\
+Minimum speed 1 km/h & -- & 3029 & 12.54 & 6.9 & 12.96 & --\\
+Minimum speed 3 km/h & -- & 2667 & 14.05 & 7.3 & 11.53 & --\\
+Minimum speed 5 km/h & -- & 2397 & 15.20 & 7.6 & 10.44 & --\\
+Excluding saturated observations & -- & 2819 & -- & -- & 12.37 & 0.0004\\
+\bottomrule
+\end{tabular}
+}
+\end{center}
+“--” indicates that the scenario does not recalculate that quantity.
+\end{document}
